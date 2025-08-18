@@ -1,0 +1,11 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  /* Your beautiful blue gradient is now the default background! */
+  background: linear-gradient(159deg, rgba(176,224,230,1) 0%, rgba(70,130,180,1) 100%);
+  background-attachment: fixed; /* Prevents the gradient from scrolling */
+  color: #333;
+}
