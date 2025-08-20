@@ -1,12 +1,155 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# 🚀 Chatbot Application – SuperPost
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Workflow Overview](./de129da5-c87f-4798-bffe-24e4d915b4ac.png)
+<p align="center"> <img src="./de129da5-c87f-4798-bffe-24e4d915b4ac.png" alt="n8n Workflow" width="700"/> </p>
 
-## Expanding the ESLint configuration
+## 📌 Project Overview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This project was built as part of an **Internship Assessment** to design and implement a **secure, full-stack chatbot application**.
+It integrates **authentication, real-time messaging, chatbot automation, and workflow orchestration** using modern tools and best practices.
+
+The chatbot ensures:
+
+* **Secure authentication** with Nhost (email-based login/signup).
+* **Role-based access control** with Hasura (Row-Level Security).
+* **GraphQL-only communication** (queries, mutations, subscriptions).
+* **Automated chatbot responses** powered by n8n workflows and OpenRouter AI.
+* **Modern frontend** built with React + Vite.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React + Vite
+* **Backend & Database:** Nhost (Postgres + Hasura GraphQL Engine)
+* **Authentication:** Nhost Auth (email-based)
+* **Chatbot Workflow:** n8n (with HTTP Requests, Webhooks, Conditionals)
+* **AI API:** OpenRouter (LLM responses)
+* **Hosting:** Netlify (frontend deployment)
+
+---
+
+## 🔐 Features
+
+### 1. Authentication
+
+* Email-based sign-up & login using Nhost Auth.
+* Only authenticated users can access chats & messages.
+
+### 2. Database & Permissions
+
+* Two main tables:
+
+  * `chats` – stores chat metadata.
+  * `messages` – stores user & chatbot messages.
+* **Row-Level Security (RLS):** Users can only view and interact with their own data.
+* Strict permissions for `insert`, `select`, `update`, and `delete`.
+
+### 3. GraphQL-Only Communication
+
+* All frontend interactions are via **Hasura GraphQL API** (queries, mutations, subscriptions).
+* No REST calls from the frontend.
+
+### 4. Hasura Actions
+
+* A custom **`sendMessage` action** triggers an n8n webhook.
+* Action is secured with authentication & role-based permissions.
+
+### 5. n8n Workflow (Chatbot Logic)
+
+* Receives webhook requests from Hasura Actions.
+* Validates ownership of the `chat_id`.
+* Calls **OpenRouter API** to generate chatbot replies.
+* Saves chatbot responses back into the database via Hasura GraphQL.
+* Returns the response to Hasura → frontend updates in real-time.
+
+### 6. Frontend (React + Vite)
+
+* **Chat List View** – shows all chats for the logged-in user.
+* **Message View** – real-time updates using GraphQL subscriptions.
+* **Send Message Flow:**
+
+  1. Save user’s message in the database.
+  2. Trigger Hasura Action → n8n workflow.
+  3. Display chatbot response in real-time.
+
+---
+
+## ⚙️ Workflow Explanation (n8n)
+
+The attached diagram shows the chatbot workflow:
+
+1. **Webhook Node** – Receives request from Hasura Action.
+2. **HTTP Request – Security Check** – Ensures user owns the `chat_id`.
+3. **If Node** – Validates request authenticity.
+
+   * **True Path:** Calls OpenRouter API → Saves response to DB → Returns reply.
+   * **False Path:** Responds with error message.
+4. **Final Webhook Response** – Sends chatbot’s reply back to Hasura → frontend updates instantly.
+
+5. Workflow-Flowchart
+   
+ ```
+Webhook 
+   |
+   v
+HTTP Request - Security Check
+   |
+   v
+   [IF Node]
+   |------- false -------> Respond to Webhook (Error ❌)
+   |
+   |--- true ------------> HTTP Request (OpenRouter API)
+                             |
+                             v
+                        HTTP Request (Save to Hasura DB)
+                             |
+                             v
+                       Respond to Webhook (Reply ✅)
+  ```
+
+## 🚀 Deployment
+
+* **Frontend:** Deployed on Netlify.
+* **Backend & Database:** Hosted with Nhost.
+* **Chatbot Workflow:** Hosted on n8n Cloud / self-hosted.
+
+---
+
+## 📖 How to Run Locally
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/superpost-chatbot.git
+   cd superpost-chatbot
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables:
+
+   * **Nhost backend URL & GraphQL endpoint**
+   * **OpenRouter API key**
+   * **n8n webhook URL**
+
+4. Run the project locally:
+
+   ```bash
+   npm run dev
+   ```
+
+
+---
+
+✨ *This project demonstrates secure full-stack development with GraphQL, workflow automation, and AI-powered chatbot responses.*
+
+---
+
+Do you want me to also **add sample GraphQL queries & mutations** (like `sendMessage`, `insert_message`, `get_chats`), so the README looks even more technical and impressive?
