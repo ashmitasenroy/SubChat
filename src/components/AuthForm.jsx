@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useSignInEmailPassword, useSignUpEmailPassword } from '@nhost/react';
 
 export const AuthForm = () => {
-  const [isSignUp, setIsSignUp] = useState(false); // Default to Sign In now
+  const [isSignUp, setIsSignUp] = useState(false);
 
-  // New state for names
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,9 +15,7 @@ export const AuthForm = () => {
 
   const handleAuth = (e) => {
     e.preventDefault();
-
     if (isSignUp) {
-      // Pass additional data during sign up
       signUpEmailPassword(email, password, {
         displayName: `${firstName} ${lastName}`.trim(),
         metadata: {
@@ -30,19 +27,44 @@ export const AuthForm = () => {
       signInEmailPassword(email, password);
     }
   };
-  
-  // NOTE: The "Check your email" screen is not shown in your new design,
-  // but the logic remains. We can style it later if needed.
-  if (needsEmailVerification) {
-     return (
-       <div>
-         <h2>Success!!</h2>
-         <p>We've sent a verification link to your email address.</p>
-          <p>Please check your inbox or your spam folder usually it goes there</p>
-          <p>Once verified, you can log in with your credentials.</p>
-       </div>
-     );
-  }
+
+  // --- MODIFIED SUCCESS MESSAGE BLOCK ---
+    if (needsEmailVerification) {
+  return (
+    <div className="auth-card">
+      <div className="message-box">
+        <img src="/email-icon.png" alt="Email Sent Icon" />
+        <h2>Verification Email Sent!</h2>
+        <p>
+          <strong>{email}</strong>.
+        </p>
+        <p>
+          Please check your inbox (and spam folder).
+        </p>
+        <p>Once verified, you can sign in.</p>
+        <p>
+          If the verification link doesn't bring you back here,
+          <br />
+          <span style={{ color: '#2b6cb0', fontWeight: 500 }}>
+            click the button below to reload the page.
+          </span>
+        </p>
+        <button className="cta-button" onClick={() => window.location.reload()}>
+          I’ve Verified My Email
+        </button>
+        <p className="redirect-info">
+          Already verified?
+          <span className="sign-in-link" onClick={() => window.location.reload()}>
+            Sign in again
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+
+  // --- END OF MODIFIED BLOCK ---      
 
   return (
     <div className="auth-card">

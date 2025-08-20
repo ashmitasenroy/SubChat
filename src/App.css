@@ -554,3 +554,293 @@
   font-size: 0.75rem;
   color: #555;
 }
+.chat-input-container .error-text {
+  color: #ef4444;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.chat-input-container .error-text:empty {
+  display: none; /* Hide empty error text */
+}   
+/* --- END OF CHAT INPUT STYLES --- */
+/* --- MEDIA QUERIES FOR RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #2A2A2A;
+  }
+  .chat-layout {
+    flex-direction: column;
+  }
+  .chat-window {
+    height: calc(100vh - 60px); /* Adjust for header/footer */
+  }
+  .message-list {
+    padding: 1rem;    
+  }
+  .welcome-bubbles-grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
+  .welcome-bubble {
+    padding: 1rem;
+  }
+  .chat-input-area {
+    padding: 1rem;
+  }
+  .chat-input-container {
+    padding: 0.5rem;
+  }
+  .chat-input-container textarea {
+    max-height: 100px; /* Limit height on smaller screens */
+  }
+  .chat-input-container button {
+    width: 36px;
+    height: 36px;
+  }   
+  .message-wrapper {
+    max-width: 90%; /* Allow more space for messages */
+  }
+  .message-avatar {
+    width: 28px;
+    height: 28px; 
+    font-size: 0.875rem; /* Smaller avatar text */
+  }
+  .message-bubble {
+    padding: 0.75rem; 
+    font-size: 0.875rem; /* Smaller text in messages */
+  }
+  .message-list {
+    padding: 1rem 5%; /* Less horizontal padding */
+  }
+  .info-text {
+    font-size: 0.875rem; /* Smaller info text */
+  }
+  .auth-card {
+    padding: 2rem 2.5rem; /* Adjust padding for smaller screens */
+  }
+  .auth-header h1 {
+    font-size: 1.5rem; /* Smaller header on mobile */
+  }
+  .auth-header p {
+    font-size: 0.875rem; /* Smaller subheader on mobile */
+  }   
+  .auth-button {
+    padding: 0.75rem; /* Smaller button padding */
+    font-size: 0.875rem; /* Smaller button text */
+  }
+  .auth-footer {
+    font-size: 0.75rem; /* Smaller footer text */
+  }
+  .auth-footer p {  
+    font-size: 0.75rem; /* Smaller footer link text */
+  }
+  .error-text {
+    font-size: 0.75rem; /* Smaller error text */
+  }
+  .input-field label {
+    font-size: 0.75rem; /* Smaller label text */    
+  }
+  .input-field input {
+    font-size: 0.875rem; /* Smaller input text */
+  }
+  .name-fields {
+    flex-direction: column; /* Stack name fields on small screens */
+    gap: 0.5rem; /* Smaller gap */
+  }
+  .input-field {
+    width: 100%; /* Full width on small screens */
+  }   
+  .user-profile {
+    flex-direction: column; /* Stack user profile elements */
+    align-items: center; /* Center align on small screens */
+  }
+  .user-info {
+    text-align: center; /* Center align user info */
+  }
+  .user-avatar {
+    width: 48px; /* Slightly larger avatar on small screens */
+    height: 48px;
+    font-size: 1.5rem; /* Larger text in avatar */
+  }
+  .user-name {  
+    font-size: 1rem; /* Slightly larger name text */
+  }
+  .user-email {
+    font-size: 0.875rem; /* Slightly larger email text */
+  }   
+  .sign-out-button {
+    font-size: 0.875rem; /* Smaller sign out button text */
+  }
+}
+/* --- END OF MEDIA QUERIES --- */
+/* --- ADDITIONAL STYLES --- */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #F3F4F6; /* Light background for the app */
+  color: #111827; /* Dark text for the app */
+}
+a {
+  color: #6366F1; /* Purple links */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;   
+}
+button {
+  cursor: pointer;
+  background-color: transparent;  
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  outline: none;
+}
+
+
+input, textarea {   
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #111827; /* Dark text for inputs */
+  background-color: #F9FAFB; /* Light background for inputs */
+  border: 1px solid #D1D5DB; /* Light border for inputs */
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #6366F1; /* Purple focus border */
+  box-shadow: 0 0 0 2px rgba(99, 102    
+, 241, 0.3); /* Purple focus shadow */
+}
+input::placeholder, textarea::placeholder {
+  color: #9CA3AF; /* Placeholder text color */
+}     
+.error-text {
+  color: #EF4444; /* Red error text */
+  font-size: 0.875rem; /* Slightly larger error text */
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.error-text:empty {
+  display: none; /* Hide empty error text */
+}
+.success-text {
+  color: #10B981; /* Green success text */
+  font-size: 0.875rem; /* Slightly larger success text */
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.success-text:empty {
+  display: none; /* Hide empty success text */  
+}
+/* 
+========================================
+  Success Message Box Styles
+========================================
+*/
+
+.message-box {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 32px 24px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.message-box img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
+.message-box h2 {
+  color: #c53030; /* Red heading */
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.message-box p {
+  color: #2d3748;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.message-box strong {
+  color: #2b6cb0;
+  font-weight: 600;
+}
+
+.message-box .cta-button {
+  background-color: #2b6cb0;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+}
+
+.message-box .cta-button:hover {
+  background-color: #2c5282;
+}
+
+.message-box .redirect-info {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-top: 20px;
+}
+
+.message-box .sign-in-link {
+  color: #2b6cb0;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.message-box .sign-in-link:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .message-box {
+    padding: 24px 16px;
+    max-width: 90%;
+    margin: 30px auto;
+  }
+
+  .message-box h2 {
+    font-size: 1.4rem;
+  }
+
+  .message-box p {
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

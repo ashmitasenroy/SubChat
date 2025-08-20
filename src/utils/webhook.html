@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook JSON Response Fix - Chatbot Application</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        header {
+            background: #4a6fa5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 25px;
+        }
+        .error-section, .solution-section, .example-section {
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #4a6fa5;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .code-keyword {
+            color: #ff79c6;
+        }
+        .code-string {
+            color: #f1fa8c;
+        }
+        .code-function {
+            color: #50fa7b;
+        }
+        .code-comment {
+            color: #6272a4;
+        }
+        .steps {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+        .steps li {
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        .steps li:before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4a6fa5;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .test-button {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+        .test-button:hover {
+            background: #3a5a80;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 14px;
+        }
+        .response-box {
+            background: #f5f5f5;
+            border-left: 4px solid #4a6fa5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .tech-badge {
+            display: inline-block;
+            background: #eaeaea;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .nhost { background: #EC4C4C; color: white; }
+        .n8n { background: #00B884; color: white; }
+        .react { background: #61DAFB; color: #333; }
+        .vite { background: #646CFF; color: white; }
+        .hasura { background: #1EB4D4; color: white; }
+        .graphql { background: #E10098; color: white; }
+        .file-structure {
+            background: #f5f5f5;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .file-item {
+            padding: 5px;
+            margin-left: 20px;
+        }
+        .folder:before {
+            content: "📁 ";
+        }
+        .file:before {
+            content: "📄 ";
+        }
+        .requirement {
+            background: #f0f7ff;
+            border-left: 4px solid #4a6fa5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .requirement h3 {
+            color: #4a6fa5;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Webhook JSON Response Error Fix</h1>
+            <p class="subtitle">Resolving "not a valid JSON response from webhook" in your Chatbot Application</p>
+            <div>
+                <span class="tech-badge nhost">Nhost</span>
+                <span class="tech-badge n8n">n8n</span>
+                <span class="tech-badge react">React</span>
+                <span class="tech-badge vite">Vite</span>
+                <span class="tech-badge hasura">Hasura</span>
+                <span class="tech-badge graphql">GraphQL</span>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="requirement">
+                <h3>Internship Assessment Requirements</h3>
+                <p>Email Sign In/Sign Up using Bolt + Nhost Auth, Chat system using Hasura GraphQL, Chatbot powered by n8n connected to Hasura Actions calling OpenRouter.</p>
+            </div>
+            
+            <div class="error-section">
+                <h2>Understanding the Problem</h2>
+                <p>The error <strong>"not a valid JSON response from webhook"</strong> occurs when your webhook endpoint doesn't return properly formatted JSON data that the client expects.</p>
+                
+                <div class="code-block">
+                    <span class="code-comment">// Example of an INVALID response that would cause this error:</span><br>
+                    Internal Server Error<br>
+                    &lt;html&gt;<br>
+                    &nbsp;&nbsp;&lt;head&gt;&lt;title&gt;500 Error&lt;/title&gt;&lt;/head&gt;<br>
+                    &nbsp;&nbsp;&lt;body&gt;Something went wrong&lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </div>
+            
+            <div class="solution-section">
+                <h2>How to Fix the Issue</h2>
+                <p>Based on your project requirements, here's how to implement the fix:</p>
+                
+                <ol class="steps">
+                    <li><strong>Fix n8n Webhook Response:</strong> Ensure your n8n workflow returns proper JSON format with correct headers.</li>
+                    <li><strong>Update Hasura Action:</strong> Configure your Hasura Action to expect and handle JSON responses correctly.</li>
+                    <li><strong>Implement Error Handling:</strong> Add proper error handling in both n8n and your React frontend.</li>
+                    <li><strong>Test the Webhook:</strong> Use tools like Postman or curl to test your webhook endpoints.</li>
+                </ol>
+                
+                <div class="code-block">
+                    <span class="code-comment">// Example of a CORRECT JSON response from n8n webhook</span><br>
+                    {<br>
+                    &nbsp;&nbsp;"<span class="code-keyword">status</span>": <span class="code-keyword">200</span>,<br>
+                    &nbsp;&nbsp;"<span class="code-keyword">message</span>": "<span class="code-string">Message processed successfully</span>",<br>
+                    &nbsp;&nbsp;"<span class="code-keyword">data</span>": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"<span class="code-keyword">chatId</span>": "<span class="code-string">982e41ab-cbfb-43e0-91f2-cf036f80754</span>",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"<span class="code-keyword">content</span>": "<span class="code-string">Hello! How can I help you today?</span>",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"<span class="code-keyword">isBot</span>: <span class="code-keyword">true</span><br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h2>Implementation Code</h2>
+                
+                <h3>1. n8n Webhook Configuration</h3>
+                <div class="code-block">
+                    <span class="code-comment">// Ensure your n8n webhook returns proper JSON</span><br>
+                    <span class="code-comment">// Add a "Set" node to configure response headers</span><br>
+                    {<br>
+                    &nbsp;&nbsp;"headers": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"Content-Type": "application/json"<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;"statusCode": 200,<br>
+                    &nbsp;&nbsp;"body": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"status": 200,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"message": "Success",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"data": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"chatId": "{{ $json.chatId }}",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "{{ $json.response }}",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"isBot": true<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                
+                <h3>2. Hasura Action Definition</h3>
+                <div class="code-block">
+                    <span class="code-comment">// Example Hasura Action definition for sendMessage</span><br>
+                    <span class="code-keyword">type</span> Mutation {<br>
+                    &nbsp;&nbsp;sendMessage(chatId: uuid!, content: String!): SendMessageResponse<br>
+                    }<br>
+                    <br>
+                    <span class="code-keyword">type</span> SendMessageResponse {<br>
+                    &nbsp;&nbsp;status: Int!<br>
+                    &nbsp;&nbsp;message: String!<br>
+                    &nbsp;&nbsp;data: MessageData<br>
+                    }<br>
+                    <br>
+                    <span class="code-keyword">type</span> MessageData {<br>
+                    &nbsp;&nbsp;chatId: uuid!<br>
+                    &nbsp;&nbsp;content: String!<br>
+                    &nbsp;&nbsp;isBot: Boolean!<br>
+                    }<br>
+                    <br>
+                    <span class="code-comment">// Handler URL: https://your-n8n-instance.com/webhook</span>
+                </div>
+                
+                <h3>3. React Component with GraphQL Mutation</h3>
+                <div class="code-block">
+                    <span class="code-keyword">import</span> { useMutation, gql } <span class="code-keyword">from</span> '@apollo/client';<br>
+                    <br>
+                    <span class="code-keyword">const</span> SEND_MESSAGE = gql`<br>
+                    &nbsp;&nbsp;mutation SendMessage($chatId: uuid!, $content: String!) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;sendMessage(chatId: $chatId, content: $content) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chatId<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isBot<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    `;<br>
+                    <br>
+                    <span class="code-keyword">const</span> <span class="code-function">ChatInput</span> = ({ chatId }) => {<br>
+                    &nbsp;&nbsp;<span class="code-keyword">const</span> [sendMessage, { loading, error }] = useMutation(SEND_MESSAGE);<br>
+                    &nbsp;&nbsp;<span class="code-keyword">const</span> [content, setContent] = useState('');<br>
+                    <br>
+                    &nbsp;&nbsp;<span class="code-keyword">const</span> <span class="code-function">handleSubmit</span> = async (e) => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!content.trim()) return;<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">try</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const { data } = await sendMessage({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variables: { chatId, content }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('Message sent:', data.sendMessage);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContent('');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">catch</span> (err) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Failed to send message:', err);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;};<br>
+                    <br>
+                    &nbsp;&nbsp;return (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;form onSubmit={handleSubmit}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{error && &lt;div className="error"&gt;{error.message}&lt;/div&gt;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type="text"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value={content}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange={(e) => setContent(e.target.value)}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;placeholder="Type your message..."<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;disabled={loading}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit" disabled={loading}&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{loading ? 'Sending...' : 'Send'}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br>
+                    &nbsp;&nbsp;);<br>
+                    };
+                </div>
+                
+                <h3>4. Database Schema for Messages</h3>
+                <div class="code-block">
+                    <span class="code-comment">-- Create messages table with proper RLS</span><br>
+                    CREATE TABLE messages (<br>
+                    &nbsp;&nbsp;id UUID DEFAULT gen_random_uuid() PRIMARY KEY,<br>
+                    &nbsp;&nbsp;chat_id UUID REFERENCES chats(id) ON DELETE CASCADE,<br>
+                    &nbsp;&nbsp;content TEXT NOT NULL,<br>
+                    &nbsp;&nbsp;is_bot BOOLEAN DEFAULT FALSE,<br>
+                    &nbsp;&nbsp;created_at TIMESTAMP DEFAULT NOW(),<br>
+                    &nbsp;&nbsp;user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE<br>
+                    );<br>
+                    <br>
+                    <span class="code-comment">-- Enable Row Level Security</span><br>
+                    ALTER TABLE messages ENABLE ROW LEVEL SECURITY;<br>
+                    <br>
+                    <span class="code-comment">-- Create policy for user access</span><br>
+                    CREATE POLICY "Users can view their own messages"<br>
+                    &nbsp;&nbsp;ON messages FOR SELECT<br>
+                    &nbsp;&nbsp;USING (auth.uid() = user_id);<br>
+                    <br>
+                    CREATE POLICY "Users can insert their own messages"<br>
+                    &nbsp;&nbsp;ON messages FOR INSERT<br>
+                    &nbsp;&nbsp;WITH CHECK (auth.uid() = user_id);
+                </div>
+                
+                <button class="test-button" onclick="testWebhook()">Test Webhook Response</button>
+                
+                <div id="responseContainer" style="display: none;">
+                    <div class="response-box">
+                        <h3>Webhook Response:</h3>
+                        <pre id="webhookResponse"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Webhook JSON Response Fix Solution | Created for your Chatbot Application</p>
+    </footer>
+
+    <script>
+        function testWebhook() {
+            // Simulate a valid JSON response from a webhook
+            const validResponse = {
+                status: 200,
+                message: "Success",
+                data: {
+                    chatId: "982e41ab-cbfb-43e0-91f2-cf036f80754",
+                    content: "Hello! How can I help you today?",
+                    isBot: true,
+                    timestamp: new Date().toISOString()
+                }
+            };
+            
+            // Display the response
+            document.getElementById('webhookResponse').textContent = JSON.stringify(validResponse, null, 2);
+            document.getElementById('responseContainer').style.display = 'block';
+            
+            // Scroll to the response
+            document.getElementById('responseContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
