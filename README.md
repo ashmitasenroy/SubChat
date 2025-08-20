@@ -147,4 +147,3 @@ HTTP Request - Security Check
 
 ---
 
-Do you want me to also **add sample GraphQL queries & mutations** (like `sendMessage`, `insert_message`, `get_chats`), so the README looks even more technical and impressive?
