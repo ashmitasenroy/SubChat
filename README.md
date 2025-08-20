@@ -2,11 +2,6 @@
 
 # 🚀 Chatbot Application – SuperPost
 
-![Workflow Overview](./de129da5-c87f-4798-bffe-24e4d915b4ac.png)
-<p align="center"> <img src="./de129da5-c87f-4798-bffe-24e4d915b4ac.png" alt="n8n Workflow" width="700"/> </p>
-
-## 📌 Project Overview
-
 This project was built as part of an **Internship Assessment** to design and implement a **secure, full-stack chatbot application**.
 It integrates **authentication, real-time messaging, chatbot automation, and workflow orchestration** using modern tools and best practices.
 
